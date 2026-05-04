@@ -48,6 +48,9 @@ The above actions ONLY implements the collection of entities from the incident.
 
 The next action is used to create a network securtiy group (NSG) rule to block all inbound connection to the Sales-VM including incoming RDP traffic. The Azure Resource Manager connector is used for this action and 'Create or update resource' was choosing among the available options. The parameters were filled accordingly, resource explorer would be quite helpful in getting the short resource id. Location and properties were selected among the advanced parameters and filled as well. The values in the properties field will now be used to create a NSG rule by updating the Sales-VM-nsg which will block inbound connections to the Sales-VM.
 
+Note: For the Playbook to complete this action the managed identity of the playbook needs to be assigned a network contributor at the scope of the virtual network (Project-vnet).
+
+
 
 
 

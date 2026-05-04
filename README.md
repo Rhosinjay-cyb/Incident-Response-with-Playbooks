@@ -20,7 +20,8 @@ Microsoft Sentinel, Microsoft Defender Portal, Azure Logic Apps
 
 
 ## Background Information
-
+This project marks the continuation of my project on managing security operation with tools from the Microsoft security stack. Prior to the commencement of this project, the following resources and services (Azure Bastion, Project-BST; Virtual Machine , Sales-VM; Virtual Network, Project-vnet; Subnet, Sales-vnet & AzureBastionSubnet; Microsoft Sentinel integrated-Log Analytics Workspace, Project-workspace; all in the same resource group, Project-RG) have already been deployed and will be used during the testing phase of this project.
+For this project, we will paint a scenario to understand the workflow of this project. An IT company, Panda, has just reviewed its security policies and has placed a strict rule against connecting remotely to virtual machines hosting critical applications or data unless the connection is established with Azure Bastion for enhanced security. Additionally, the sales team has also instructed its members to restrain from connecting with unapproved IP addresses while using Azure Bastion to connect remotely to the team's VM as such IPs will regarded as untrusted IPs and the remote connection will be blocked. At the moment the team has only approved one IP address which is from the company's internet service provider. 
 
 
 ## Steps Taken

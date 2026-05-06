@@ -82,7 +82,10 @@ Following the running of the playbook, it expected results were confirmed as fol
 
 ....sending an email notification to relevant members of the SecOps team for necessary actions.
 
-
+The post-review of the security incident, includes the following:
+* deleting the NSG rule created by the playbook action to allow remote connection to the VM
+* classifying the security incident and
+* closing ofthe incident
 
 ## Conclusion
 

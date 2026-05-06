@@ -51,7 +51,9 @@ The next action is used to create a network securtiy group (NSG) rule to block a
 Note: For the Playbook to complete this action the managed identity of the playbook needs to be assigned a network contributor at the scope of the virtual network (Project-vnet).
 
 
+The next action in the workflow is the closing of remote session on the virtual machine when a user connects to the VM with an untrusted IP. This action also ensures that only the malicious session is killed while other sessions are skipped preventing the disruption of production operation. The action is implemented with the HTTP connector, which sends a web request to the API of Azure Resource Manager (ARM), the ARM validatesthe request and allows the runCommand service to utilize the Azure VM agent to exexute the powershell script in the body of the HTTP request, basically to kill open malicious remote session.
 
+The last of the actions on the workflow is to send an email notification to relevant member of the security operations team for review and other neccessary actions. Aside alerting the team, the email also provide a summary of the attack at a glance with details that includes the entities extracted from the incident details.
 
 
 

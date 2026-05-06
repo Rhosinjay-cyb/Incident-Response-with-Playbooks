@@ -27,7 +27,7 @@ To put this project into context, the sales team of a company has a VM (Sales-VM
 Initially, each of the IPs that are used for the remote connection could be monitored from the logs collected from Project-BST which are stored in MicrosoftAzureBastionAuditLogs table in the Project-workspace.
 Afterwards, an analytics rule will be created to detect untrusted IPs, and the automation rule attached to the analytics rule will be utilized to trigger the playbook. The main actions of the playbook is to block the inbound RDP port of the VM once the attack is detected. However, the blocked RDP port will only prevent future remote connection to the VM whilethe attacker stillremains connected. The next action is the identification of the malicious remote connections among all open RDP session and shutting it off. The last action of the playbook is the sending of an email notification about the result of the playbook to relevant members of the security operations team, while the other actions of the automation role is to assign the incident to a member of the security operations team for necessary actions.
 
-The creation of the analytics rule and the design of the workflow in the playbook will be discussed in the next section, the testing of the playbook comes in the next section. Followed with the conclusion and recommendation.
+The creation of the analytics rule and the design of the workflow in the playbook will be discussed in the next section, while the testing of the playbook and conclusion follows respectively.
 
 ## Steps Taken
 

@@ -51,15 +51,36 @@ The above actions ONLY implements the collection of entities from the incident.
 
 The next action is used to create a network securtiy group (NSG) rule to block all inbound connection to the Sales-VM including incoming RDP traffic. The Azure Resource Manager connector is used for this action and 'Create or update resource' was choosing among the available options. The parameters were filled accordingly, resource explorer would be quite helpful in getting the short resource id. Location and properties were selected among the advanced parameters and filled as well. The values in the properties field will now be used to create a NSG rule by updating the Sales-VM-nsg which will block inbound connections to the Sales-VM.
 
-Note: For the Playbook to complete this action the managed identity of the playbook needs to be assigned a network contributor at the scope of the virtual network (Project-vnet).
+Note: For the Playbook to complete this action the managed identity of the playbook needs to be assigned a network contributor role at the scope of the the resource, virtual machine (Sales-VM).
 
 
 The next action in the workflow is the closing of remote session on the virtual machine when a user connects to the VM with an untrusted IP. This action also ensures that only the malicious session is killed while other sessions are skipped preventing the disruption of production operation. The action is implemented with the HTTP connector, which sends a web request to the API of Azure Resource Manager (ARM), the ARM validatesthe request and allows the runCommand service to utilize the Azure VM agent to exexute the powershell script in the body of the HTTP request, basically to kill open malicious remote session.
 
+Note: For the Playbook to complete this action the managed identity of the playbook needs to be assigned a Virtual Machine contributor role at the scope of the virtual network (Project-vnet).
+
 The last of the actions on the workflow is to send an email notification to relevant member of the security operations team for review and other neccessary actions. Aside alerting the team, the email also provide a summary of the attack at a glance with details that includes the entities extracted from the incident details.
 
 
+## Testing of the Playbook
 
+For the effective testing of the playbook, a new user (Random-user) is created on the Sales-VM and it was added to the remote desktop users group to allow the user to able to logon remotely. 
+
+Afterwards, the user account created alongside with the VM (Sales-user) was used to logon remotely to the VM via Azure Bastion while using the trusted IP. To simulate an attack scenario, the Random-user account was used to logon to the Sales-VM remotely via Azure Bastion as well but with an untrusted IP. 
+
+
+
+The detection of the usage of an untrusted IP for connection to the VM led to the firing of a Microsoft Sentinel alert and an incident thereafter. 
+
+
+
+While reviewing the incident tab, it was observed that the automation rule had assigned the incident to a member in the SecOps team. Also, the review of the incident page showed that the playbook was succesfully triggered by the incident.
+
+Following the running of the playbook, it expected results were confirmed as follows; creation of a NSG security rule to block all inbound RDP connection to the Sales-VM. 
+
+...closing the remote session of the attacker (Random-user) that connected with an untrusted IP. 
+
+
+....sending an email notification to relevant members of the SecOps team for necessary actions.
 
 
 
@@ -67,7 +88,6 @@ The last of the actions on the workflow is to send an email notification to rele
 
 
 
-## Future Works
 
 
 

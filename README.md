@@ -86,7 +86,7 @@ Following the running of the playbook, it expected results were confirmed as fol
 
 ## Conclusion
 
-This project succesfully demonstrates the use of playbook in supporting incident response while managing security operations. It also provided an ample insights in designing the workflow of playbook in Azure Logic Apps for integration in Microsoft Sentinel. Overall, the project also elaborates the procedures to managing the life-cycle of real-world security incident fromgeneration to closure.
+This project succesfully demonstrates the use of playbook in supporting incident response while managing security operations. It also provided an ample insights in designing the workflow of playbook in Azure Logic Apps for integration in Microsoft Sentinel. Overall, the project also elaborates the procedures to managing the life-cycle of real-world security incident from generation to closure.
 
 
 

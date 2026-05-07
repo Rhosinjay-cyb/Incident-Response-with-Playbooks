@@ -105,7 +105,7 @@ To simulate an attack scenario, the Random-user account was used to logon to the
 
 ![image](Images/LogontoVM.png)
 
-![image](Images/connecttoVM.png)
+![image](Images/ConnecttoVM.png)
 
 The detection of the usage of an untrusted IP for connection to the Sales-VM led to the firing of a Microsoft Sentinel alert and an incident thereafter. 
 

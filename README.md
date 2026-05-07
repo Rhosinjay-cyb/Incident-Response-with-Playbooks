@@ -43,7 +43,7 @@ The project commenced with the creation of an analytics rule (scheduled) to dete
 
 The playbook is created with a Microsoft Sentinel incident as the trigger. While creating the playbook the subscription and resource group is specified and consumption is specified as the tier.
 
-![image](Images/CR. Playbook.png)
+![image](Images/CR.Playbook.png)
 
 ### Designing the workflow of the playbook
 
@@ -61,7 +61,7 @@ Note: Entity mapping is the responsibility of the security team while creating t
 
 The for each loop has two seperate conditions which is used to collect the entities. The first conditons appends IPs to the array IPList if the kind equals Ip while the under condition appends Username to the array UserList if the kind equals Account.
 
-![image](Images/for.Each.png)
+![image](Images/For.Each.png)
 
 The above actions ONLY implements the collection of entities from the incident.
 

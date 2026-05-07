@@ -82,6 +82,11 @@ The last of the actions on the workflow is to send an email notification to rele
 ![image](Images/Send.Email.png)
 
 ### Integration of the playbook with Microsoft Sentinel
+To integrate the newly created playbook with Microsoft Sentinel, an automation rule in created. There are two actions in the automation rule, the first one is to assign the incident to a member of the SecOps team while the other action is run the playbook.
+
+![image](Images/Aut.Rule1.png)
+![image](Images/Aut.Rule2.png)
+
 
 ## Testing of the Playbook
 

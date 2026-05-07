@@ -31,8 +31,16 @@ The creation of the analytics rule and the design of the workflow in the playboo
 
 ## Steps Taken
 
+The project was accomplished in the following order
+
+### Creation of Analytics Rule
+
 The project commenced with the creation of an analytics rule (scheduled) to detect remote connections to the Sales-VM via Azure Bastion with an untrusted IP.
 
+### Creation of the Azure Logic App playbook
+
+
+### Designing the workflow of the playbook
 
 Followed with the designing of the workflow of the playbook from trigger to the last action.
 
@@ -60,6 +68,7 @@ Note: For the Playbook to complete this action the managed identity of the playb
 
 The last of the actions on the workflow is to send an email notification to relevant member of the security operations team for review and other neccessary actions. Aside alerting the team, the email also provide a summary of the attack at a glance with details that includes the entities extracted from the incident details.
 
+### Integration of the playbook with Microsoft Sentinel
 
 ## Testing of the Playbook
 

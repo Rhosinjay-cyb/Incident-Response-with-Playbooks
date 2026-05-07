@@ -59,7 +59,7 @@ The above actions ONLY implements the collection of entities from the incident.
 
 The next action is used to create a network securtiy group (NSG) rule to block all inbound connection to the Sales-VM including incoming RDP traffic. The Azure Resource Manager connector is used for this action and 'Create or update resource' was choosing among the available options. The parameters were filled accordingly, resource explorer would be quite helpful in getting the short resource id. Location and properties were selected among the advanced parameters and filled as well. The values in the properties field will now be used to create a NSG rule by updating the Sales-VM-nsg which will block inbound connections to the Sales-VM.
 
-Note: For the Playbook to complete this action the managed identity of the playbook needs to be assigned a network contributor role at the scope of the the resource, virtual machine (Sales-VM).
+Note: For the Playbook to complete this action the managed identity of the playbook needs to be assigned a network contributor role at the NSG of the virtual machine (Sales-VM-nsg) at the minimum.
 
 
 The next action in the workflow is the closing of remote session on the virtual machine when a user connects to the VM with an untrusted IP. This action also ensures that only the malicious session is killed while other sessions are skipped preventing the disruption of production operation. The action is implemented with the HTTP connector, which sends a web request to the API of Azure Resource Manager (ARM), the ARM validatesthe request and allows the runCommand service to utilize the Azure VM agent to exexute the powershell script in the body of the HTTP request, basically to kill open malicious remote session.

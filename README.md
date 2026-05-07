@@ -25,7 +25,7 @@ This project marks the continuation of my project on managing security operation
 To put this project into context, the sales team of a company has a VM (Sales-VM) which host critical applications and data, and would want to enhance its security by preventing unauthorised access. The team has approved Azure Bastion and one particular IP address for remote connection to the VM. The team wants every other IPs to be deemed untrusted and such connections should be blocked. Hence, the security solution for the sales team is the core of this project. 
 
 Initially, each of the IPs that are used for the remote connection could be monitored from the logs collected from Project-BST which are stored in MicrosoftAzureBastionAuditLogs table in the Project-workspace.
-Afterwards, an analytics rule will be created to detect untrusted IPs, and the automation rule attached to the analytics rule will be utilized to trigger the playbook. The main actions of the playbook is to block the inbound RDP port of the VM once the attack is detected. However, the blocked RDP port will only prevent future remote connection to the VM whilethe attacker stillremains connected. The next action is the identification of the malicious remote connections among all open RDP session and shutting it off. The last action of the playbook is the sending of an email notification about the result of the playbook to relevant members of the security operations team, while the other actions of the automation role is to assign the incident to a member of the security operations team for necessary actions.
+Afterwards, an analytics rule will be created to detect untrusted IPs, and the automation rule attached to the analytics rule will be utilized to trigger the playbook. The main actions of the playbook is to block the inbound RDP port of the VM once the attack is detected. However, the blocked RDP port will only prevent future remote connection to the VM whilethe attacker still remains connected. The next action is the identification of the malicious remote connections among all open RDP session and shutting it off. The last action of the playbook is the sending of an email notification about the result of the playbook to relevant members of the security operations team, while the other actions of the automation role is to assign the incident to a member of the security operations team for necessary actions.
 
 The creation of the analytics rule and the design of the workflow in the playbook will be discussed in the next section, while the testing of the playbook and conclusion follows respectively.
 
@@ -87,32 +87,58 @@ To integrate the newly created playbook with Microsoft Sentinel, an automation r
 ![image](Images/Aut.Rule1.png)
 ![image](Images/Aut.Rule2.png)
 
+A major prequisite that was completed for seamless interaction between Microsoft Sentinel and the playbook was to configure the playbook permission Microsoft Sentinel at resource group level. This configuration automatically assigns Azure Security Insights a Microsoft Sentinel Automation Contributor role which gives Microsoft Sentinel the permission to trigger any playbook in that resource group.
+
+![image](Images/Playbk.perm.png)
 
 ## Testing of the Playbook
 
-For the effective testing of the playbook, a new user (Random-user) is created on the Sales-VM and it was added to the remote desktop users group to allow the user to able to logon remotely. 
+The Sales-user account was used to logon to the sales-VM via Azure Bastion with the trusted IP. Then a new user (Random-user) was created  on the Sales-VM and it was added to the remote desktop users group to allow the Random-user to able to logon remotely. 
 
-Afterwards, the user account created alongside with the VM (Sales-user) was used to logon remotely to the VM via Azure Bastion while using the trusted IP. To simulate an attack scenario, the Random-user account was used to logon to the Sales-VM remotely via Azure Bastion as well but with an untrusted IP. 
+![image](Images/CR.user.png)
 
+Note: A new user was only created to demonstrate the testing of the playbook.
 
+![image](Images/Random_user.png)
 
-The detection of the usage of an untrusted IP for connection to the VM led to the firing of a Microsoft Sentinel alert and an incident thereafter. 
+To simulate an attack scenario, the Random-user account was used to logon to the Sales-VM remotely via Azure Bastion but with an untrusted IP address. 
 
+![image](Images/LogontoVM.png)
 
+![image](Images/connecttoVM.png)
 
-While reviewing the incident tab, it was observed that the automation rule had assigned the incident to a member in the SecOps team. Also, the review of the incident page showed that the playbook was succesfully triggered by the incident.
+The detection of the usage of an untrusted IP for connection to the Sales-VM led to the firing of a Microsoft Sentinel alert and an incident thereafter. 
+
+![image](Images/INCIDENT2.png)
+
+While reviewing the incident page, it was observed that the automation rule had assigned the incident to a member in the SecOps team.
+
+Also, the review of the incident page showed that the playbook was succesfully triggered by the incident.
+
+![image](Images/Ran_success.png)
 
 Following the running of the playbook, it expected results were confirmed as follows; creation of a NSG security rule to block all inbound RDP connection to the Sales-VM. 
 
+![image](Images/NSG_success.png)
+
 ...closing the remote session of the attacker (Random-user) that connected with an untrusted IP. 
 
+![image](Images/Closed_success.png)
 
 ....sending an email notification to relevant members of the SecOps team for necessary actions.
 
+![image](Images/email.png)
+
 The post-review of the security incident, includes the following:
 * deleting the NSG rule created by the playbook action to allow remote connection to the VM
-* classifying the security incident and
-* closing ofthe incident
+
+![image](Images/NSG_Delete.png)
+  
+* classifying the security incident
+
+![image](Images/manage_incident.png)
+  
+*  and closing of the incident
 
 ## Conclusion
 

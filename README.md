@@ -95,7 +95,7 @@ A major prequisite that was completed for seamless interaction between Microsoft
 
 The Sales-user account was used to logon to the sales-VM via Azure Bastion with the trusted IP. Then a new user (Random-user) was created  on the Sales-VM and it was added to the remote desktop users group to allow the Random-user to able to logon remotely. 
 
-![image](Images/CR.user.png)
+![image](Images/CR.User.png)
 
 Note: A new user was only created to demonstrate the testing of the playbook.
 
@@ -139,6 +139,10 @@ The post-review of the security incident, includes the following:
 ![image](Images/manage_incident.png)
   
 *  and closing of the incident
+
+![image](Images/resolved.png)
+
+![image](Images/evidence_resolved.png)
 
 ## Conclusion
 

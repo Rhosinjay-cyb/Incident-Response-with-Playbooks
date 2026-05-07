@@ -43,7 +43,7 @@ The project commenced with the creation of an analytics rule (scheduled) to dete
 
 The playbook is created with a Microsoft Sentinel incident as the trigger. While creating the playbook the subscription and resource group is specified and consumption is specified as the tier.
 
-![image](Images/CR.Playbook.png)
+![image](Images/CR. Playbook.png)
 
 ### Designing the workflow of the playbook
 

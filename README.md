@@ -144,6 +144,19 @@ The post-review of the security incident, includes the following:
 
 ![image](Images/evidence_resolved.png)
 
+## Sensitivity Analysis
+
+Further tests were implemented to test the performance of the playbook. In this case, another user account (SecondRandom-user) was created on the Sales-VM. Afterwards, both user accounts (Random-user & SecondRandom-user) were used to logon to sales-VM via Azure Bastion with both users using different untrusted IPs. 
+
+![image](Images/extra2.png)
+
+![image](Images/IPs.png)
+
+![image](Images/Users.png)
+
+Similarly, the attack was detected, and it led to a security incident. The incident page dispalys the Accounts and IPs involved in the attack. Each of the sessions were also closed, and all the entities related to the attack were extracted and sent with the email notification.
+![image](Images/email2.png)
+
 ## Conclusion
 
 This project succesfully demonstrates the use of playbook in supporting incident response while managing security operations. It also provided an ample insights in designing the workflow of playbook in Azure Logic Apps for integration in Microsoft Sentinel. Overall, the project also elaborates the procedures to managing the life-cycle of real-world security incident from generation to closure.

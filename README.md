@@ -37,13 +37,13 @@ The project was accomplished in the following order
 
 The project commenced with the creation of an analytics rule (scheduled) to detect remote connections to the Sales-VM via Azure Bastion with an untrusted IP.
 
-![image](Images/A.rule.png)
+![image](Images/A.Rule.png)
 
 ### Creation of the Azure Logic App playbook
 
 The playbook is created with a Microsoft Sentinel incident as the trigger. While creating the playbook the subscription and resource group is specified and consumption is specified as the tier.
 
-![image](Images/CR. Playbook.png)
+![image](Images/CR.Playbook.png)
 
 ### Designing the workflow of the playbook
 

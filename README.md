@@ -1,10 +1,10 @@
 ## Project Title
 
-Automating incident response with playbooks
+Automating security incident response with playbooks
 
 ## Objective
 
-The aim of this project is to design an Azure Logic Apps playbook and integrate it with Microsoft Sentinel via automation rule to facilitate automated response to security incidents in Microsoft Sentinel, thereby supporting the effective management of security operations (SecOps).
+The aim of this project is to design a playbook with Azure Logic Apps and integrate it with Microsoft Sentinel via automation rule to facilitate automated response to security incidents in Microsoft Sentinel, thereby supporting the effective management of security operations (SecOps).
 
 ## Tools Used
 
@@ -22,10 +22,10 @@ Microsoft Sentinel, Microsoft Defender Portal, Azure Logic Apps
 ## Background Information
 This project marks the continuation of my project on managing security operation with tools from the Microsoft security stack. Prior to the commencement of this project, the following resources and services (Azure Bastion, Project-BST; Virtual Machine , Sales-VM; Virtual Network, Project-vnet; Subnet, Sales-vnet & AzureBastionSubnet; Microsoft Sentinel integrated-Log Analytics Workspace, Project-workspace; all in the same resource group, Project-RG) have already been deployed and will be used during the testing phase of this project. Additionally, the diagnostic settings of Azure Bastion (Project-BST) has also already been enabled and its events logs are being sent to the Microsoft Sentinel integrated-Log Analytics Workspace (Project-workspace) for analysis.
 
-To put this project into context, the sales department has a virtual machine (Sales-VM) which host critical applications and data, and would want to enhance its security. The department has approved Azure Bastion and one particular IP address for remote connection to the VM. The team wants every other IPs to be deemed untrusted and such connections should be blocked. Hence, the security solution for the sales team is the core of this project. 
+To put this project into context, the sales department has a virtual machine (Sales-VM) which host critical applications and data, and would want to enhance its security. The department approved Azure Bastion and a particular IP address for remote connection to the VM. The department wants every other IPs to be deemed untrusted and such connections should be blocked. Hence, the security solution for the sales department is the core of this project. 
 
 Initially, each of the IPs that are used for the remote connection could be monitored from the event logs stored in MicrosoftAzureBastionAuditLogs table in the Project-workspace.
-To provide a solution to the sales department security challenge, an analytics rule will be created to detect untrusted IPs, the playbook workflow will be designed, and the automation rule attached to the analytics rule will be utilized to trigger the playbook. The main actions of the playbook is to block the inbound connection to the VM, particularly RDP traffic, once the attack is detected. However, the blocked traffic will only prevent future remote connection to the VM while the attacker's remote session remains active. The next action is to identify the attacker's remote session among all active remote sessions and shut it off. The last action of the playbook is to send an email notification about the result of the playbook to relevant members of the security operations team for neccessary actions.
+To provide a solution to the sales department security challenge, an analytics rule will be created to detect remote connection with untrusted IPs, the playbook workflow will be designed, and the automation rule attached to the analytics rule will be utilized to trigger the playbook. The main actions of the playbook is to block the inbound connection to the VM, particularly RDP traffic, once the attack is detected. However, the blocked traffic will only prevent future remote connection to the VM while the attacker's remote session remains active. The next action is to identify the attacker's remote session among all active remote sessions and shut it off. The last action of the playbook is to send an email notification about the result of the playbook to relevant members of the security operations team for neccessary actions.
 
 The creation of the analytics rule and the design of the workflow in the playbook will be discussed in the next section, while the testing of the playbook and conclusion follows respectively.
 

@@ -165,10 +165,10 @@ Similarly, the attack was detected, and it led to a security incident. The incid
 
 ## Conclusion
 
-This project succesfully demonstrates the use of playbook in supporting incident response while managing security operations. It also provided an ample insights in designing the workflow of playbook in Azure Logic Apps for integration in Microsoft Sentinel. Overall, the project also elaborates the procedures to managing the life-cycle of real-world security incident from generation to closure.
+This project succesfully demonstrates the implementation of playbooks in supporting incident response while enhancing the management of security operations. It also provides valuable insights into designing and orchestrating workflows in Azure Logic Apps for seamless integration with Microsoft Sentinel. Overall, the project highlights the end-to-end management of real-world security incidents covering the complete incident lifecycle from detection and containment to recovery and closure.
 
 ## Past Project
 
-* https://rhosinjay-cyb.github.io/Azure-Firewall/
-* https://rhosinjay-cyb.github.io/Microsoft-Sentinel/
+* Deployment of Azure Firewall for secure access and traffic control https://rhosinjay-cyb.github.io/Azure-Firewall/
+* Deployment of Microsoft Sentinel to support cloud workload protection https://rhosinjay-cyb.github.io/Microsoft-Sentinel/
 

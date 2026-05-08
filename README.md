@@ -87,17 +87,17 @@ To integrate the newly created playbook with Microsoft Sentinel, an automation r
 ![image](Images/Aut.Rule1.png)
 ![image](Images/Aut.Rule2.png)
 
-A major prequisite that was implemented for seamless interaction between Microsoft Sentinel and the playbook was to configure the playbook permission of Microsoft Sentinel at resource group level. This configuration automatically assigns the Microsoft Sentinel Automation Contributor role to Azure Security Insights (service principal) which gives Microsoft Sentinel the permission to trigger any playbook in that resource group.
+A major prequisite that was implemented for seamless interaction between Microsoft Sentinel and the playbook was to configure the playbook permission of Microsoft Sentinel at resource group level. This configuration automatically assigns the Microsoft Sentinel Automation Contributor role to Azure Security Insights (service principal) which gives Microsoft Sentinel the permission to trigger any playbook in that resource group. However, users with the Microsoft Sentinel Contributor role can also run the playbooks manually on security incidents.
 
 ![image](Images/Playbk.perm.png)
 
 ## Testing of the Playbook
 
-The Sales-user account was used to logon to the sales-VM via Azure Bastion with the trusted IP. Then a new user (Random-user) was created  on the Sales-VM and it was added to the remote desktop users group to allow the Random-user to able to logon remotely. 
+The Sales-user account was used to logon to the sales-VM via Azure Bastion with the trusted IP. Then a new user account (Random-user) was created  on the Sales-VM and it was added to the remote desktop users group to allow remote logon with Random-user account. 
 
 ![image](Images/CR.User.png)
 
-Note: The new user (Random-user) was only created to effectively demonstrate the testing of the playbook.
+Note: The new user account was only created to effectively demonstrate the testing of the playbook.
 
 ![image](Images/Random_user.png)
 
@@ -113,32 +113,35 @@ The detection of the usage of an untrusted IP for connection to the Sales-VM led
 
 While reviewing the incident page, it was observed that the automation rule had assigned the incident to a member in the SecOps team.
 
-Also, the review of the incident page showed that the playbook was succesfully triggered by the incident.
+Further review of the incident page indicated that the playbook was succesfully triggered by the incident.
 
 ![image](Images/Ran_success.png)
 
-Following the running of the playbook, it expected results were confirmed as follows; creation of a NSG security rule to block all inbound RDP connection to the Sales-VM. 
+Following the running of the playbook, it expected results were confirmed as follows: 
+
+creation of a NSG security rule to block all inbound RDP connection to the Sales-VM;
 
 ![image](Images/NSG_success.png)
 
-...closing the remote session of the attacker (Random-user) that connected with an untrusted IP. 
+closing the remote session of the attacker (Random-user) that connected with an untrusted IP; 
 
 ![image](Images/Closed_success.png)
 
-....sending an email notification to relevant members of the SecOps team for necessary actions.
+and sending an email notification to relevant members of the SecOps team for necessary actions.
 
 ![image](Images/email.png)
 
-The post-review of the security incident, includes the following:
-* deleting the NSG rule created by the playbook action to allow remote connection to the VM
+The recovery operations and incident management includes the following:
+
+deleting the NSG rule created by the playbook action to allow remote connection to the VM;
 
 ![image](Images/NSG_Delete.png)
   
-* classifying the security incident
+classifying the security incident;
 
 ![image](Images/manage_incident.png)
   
-*  and closing of the incident
+and closing of the incident.
 
 ![image](Images/resolved.png)
 

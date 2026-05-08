@@ -1,0 +1,75 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "connections_arm_name": {
+            "value": null
+        },
+        "connections_arm_2_name": {
+            "value": null
+        },
+        "connections_office365_name": {
+            "value": null
+        },
+        "connections_azuresentinel_name": {
+            "value": null
+        },
+        "connections_azuresentinel_1_name": {
+            "value": null
+        },
+        "connections_azuresentinel_2_name": {
+            "value": null
+        },
+        "virtualMachines_Sales_VM_name": {
+            "value": null
+        },
+        "workflows_stop_bastion_acc_name": {
+            "value": null
+        },
+        "bastionHosts_Project_BST_name": {
+            "value": null
+        },
+        "workflows_Add_IP_Entity_To_NSG_name": {
+            "value": null
+        },
+        "virtualNetworks_Project_Vnet_name": {
+            "value": null
+        },
+        "networkInterfaces_sales_vm897_name": {
+            "value": null
+        },
+        "networkSecurityGroups_Sales_VM_nsg_name": {
+            "value": null
+        },
+        "connections_azuresentinel_Stop_Bastion_name": {
+            "value": null
+        },
+        "publicIPAddresses_Project_Vnet_IPv4_name": {
+            "value": null
+        },
+        "workflows_UnusuaLBastionAccess_Playbook_name": {
+            "value": null
+        },
+        "connections_azuresentinel_stop_bastion_acc_name": {
+            "value": null
+        },
+        "workspaces_Project_workspace_name": {
+            "value": null
+        },
+        "connections_azuresentinel_stop_bastion_access_name": {
+            "value": null
+        },
+        "connections_azuresentinel_Add_IP_Entity_To_NSG_name": {
+            "value": null
+        },
+        "solutions_SecurityInsights_project_workspace__name": {
+            "value": null
+        },
+        "networkSecurityGroups__nsgName__externalid": {
+            "value": null
+        },
+        "__encodeURIComponent__networkSecurityGroups_Sales_VM_nsg_externalid": {
+            "value": null
+        }
+    }
+}

@@ -14,7 +14,7 @@ Microsoft Sentinel, Microsoft Defender Portal, Azure Logic Apps
 ## Lab Setup
 * Creation of analytics rule
 * Designing the workflow of the playbook with Azure Logic Apps
-* Creation of automation rule (Integration of playbook with incident)
+* Creation of automation rule (Integration of the playbook with the security incident)
 * Testing of the playbook
 
 
@@ -35,7 +35,7 @@ The project was accomplished in the following order
 
 ### Creation of Analytics Rule
 
-The project commenced with the creation of an analytics rule (scheduled) to detect remote connections to the Sales-VM via Azure Bastion with an untrusted IP.
+The project commenced with the creation of a scheduled analytics rule with the title 'UnusualBastionAccess' to detect remote connections to the Sales-VM via Azure Bastion with an untrusted IP.
 
 ![image](Images/A.Rule.png)
 
@@ -81,8 +81,10 @@ The last of the actions on the workflow was to send an email notification to rel
 
 ![image](Images/Send.Email.png)
 
-### Integration of the playbook with Microsoft Sentinel
-To integrate the newly created playbook with Microsoft Sentinel, an automation rule was created. There were two actions in the automation rule, the first one was to assign the incident to a member of the SecOps team while the other action was to run the playbook.
+### Integration of playbook with Microsoft Sentinel Incident
+
+An automation rule was created to integrate the playbook with the Microsoft Sentinel Incident. The generation of a security incident starts with a security alert, and the analytics rule is reponsible for firing the security alert. Hence, the earlier created analytics rule was edited, and an automation rule was created at the 'Automated Response' tab of the analytics rule. This configuration now allows the playbook to be triggered once the incident is generated.
+There were two actions in the automation rule, the first one was to assign the security incident to a member of the SecOps team while the other action was to run the playbook.
 
 ![image](Images/Aut.Rule1.png)
 ![image](Images/Aut.Rule2.png)
@@ -147,9 +149,9 @@ and closing of the incident.
 
 ![image](Images/evidence_resolved.png)
 
-## Sensitivity Analysis
+## Further Tests
 
-Further tests were implemented to test the performance of the playbook. In this case, another user account (SecondRandom-user) was created on the Sales-VM. Afterwards, both user accounts (Random-user & SecondRandom-user) were used to logon to sales-VM via Azure Bastion with both users using different untrusted IPs. 
+Further tests were implemented to assess the performance of the playbook. In this case, another user account (SecondRandom-user) was created on the Sales-VM and added to remote desktop users group. Afterwards, both user accounts (Random-user & SecondRandom-user) were logged-on to sales-VM via Azure Bastion with both users using different untrusted IPs. 
 
 ![image](Images/extra3.png)
 
@@ -157,7 +159,7 @@ Further tests were implemented to test the performance of the playbook. In this 
 
 ![image](Images/Users.png)
 
-Similarly, the attack was detected, and it led to a security incident. The incident page dispalys the Accounts and IPs involved in the attack. Each of the sessions were also closed, and all the entities related to the attack were extracted and sent with the email notification. In cases where the attack is multiple and simultaneous with different IPs, every entity will be extracted by the playbook just as seen in the incident page.
+Similarly, the attack was detected, and it led to a security incident. The incident page dispalys the Accounts and IPs involved in the attack. Each of the attacker's sessions were also closed, and all the entities related to the attack were extracted and sent with the email notification. In cases where the attack is simultaneous, and involving multiple accounts and IPs, every entity will be extracted by the playbook just as seen in the incident page, and every of the attacker's sessions will be closed.
 
 ![image](Images/email2.png)
 

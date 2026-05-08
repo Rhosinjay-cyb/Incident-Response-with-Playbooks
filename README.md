@@ -25,7 +25,7 @@ This project marks the continuation of my project on managing security operation
 To put this project into context, the sales team of a company has a virtual machine (Sales-VM) which host critical applications and data, and would want to enhance its security. The team has approved Azure Bastion and one particular IP address for remote connection to the VM. The team wants every other IPs to be deemed untrusted and such connections should be blocked. Hence, the security solution for the sales team is the core of this project. 
 
 Initially, each of the IPs that are used for the remote connection could be monitored from the event logs stored in MicrosoftAzureBastionAuditLogs table in the Project-workspace.
-To provide a solution to the sales team security challenge, an analytics rule will be created to detect untrusted IPs, the playbook workflow will be designed, and the automation rule attached to the analytics rule will be utilized to trigger the playbook. The main actions of the playbook is to block the inbound connection to the VM, particularly RDP traffic, once the attack is detected. However, the blocked RDP port will only prevent future remote connection to the VM while the attacker's remote session is still active. The next action is to identify the malicious remote session among all active remote session and shut it off. The last action of the playbook is to send an email notification about the result of the playbook to relevant members of the security operations team.
+To provide a solution to the sales team security challenge, an analytics rule will be created to detect untrusted IPs, the playbook workflow will be designed, and the automation rule attached to the analytics rule will be utilized to trigger the playbook. The main actions of the playbook is to block the inbound connection to the VM, particularly RDP traffic, once the attack is detected. However, the blocked traffic will only prevent future remote connection to the VM while the attacker's remote session remains active. The next action is to identify the attacker's remote session among all active remote sessions and shut it off. The last action of the playbook is to send an email notification about the result of the playbook to relevant members of the security operations team for neccessary actions.
 
 The creation of the analytics rule and the design of the workflow in the playbook will be discussed in the next section, while the testing of the playbook and conclusion follows respectively.
 
@@ -47,7 +47,7 @@ The playbook is created with Microsoft Sentinel incident as the trigger. While c
 
 ### Designing the workflow of the playbook
 
-Following the creation of the playbook, the next step was the designing of the workflow of the playbook from trigger to the last action using the logic app designer blade.
+Following the creation of the playbook, the the workflow of the playbook from trigger to the last action was designed with the logic app designer blade.
 
 ![image](Images/Workflow.png)
 
@@ -55,39 +55,39 @@ The trigger for the workflow is Microsoft Sentinel Incident because the playbook
 
 To collect the entities in the incident, these variables of array data type are initialized to collect and store the entities. 
 
-Note: Entity mapping is the responsibility of the security team while creating the analytics rule, mapping the right entity to the analytics rule helps in enriching incident investigation.
+Note: Entity mapping is the responsibility of the security team while creating the analytics rule, mapping the right entity to the analytics rule assists in enriching incident investigation.
 
 ![image](Images/INI.Variables.png)
 
-The for each loop has two seperate conditions which is used to collect the entities. The first conditons appends IPs to the array IPList if the kind equals Ip while the under condition appends Username to the array UserList if the kind equals Account.
+The for each loop has two seperate conditions which were used to collect the entities. The first conditons appends IPs to the array IPList if the entity kind equals Ip while the under condition appends Username to the array UserList if the entity kind equals Account.
 
 ![image](Images/For.Each.png)
 
-The above actions ONLY implements the collection of entities from the incident.
+The above actions ONLY implements the collection of entities from the security incident.
 
-The next action is used to create a network securtiy group (NSG) rule to block all inbound connection to the Sales-VM including incoming RDP traffic. The Azure Resource Manager connector is used for this action and 'Create or update resource' was choosing among the available options. The parameters were filled accordingly, resource explorer would be quite helpful in getting the short resource id. Location and properties were selected among the advanced parameters and filled as well. The values in the properties field will now be used to create a NSG rule by updating the Sales-VM-nsg which will block inbound connections to the Sales-VM. Blocking the inbound traffic will prevent the attacker from reconnecting.
+The next action was used to create a network securtiy group (NSG) security rule to block all inbound connection to the Sales-VM including incoming RDP traffic. The Azure Resource Manager connector is used for this action and 'Create or update resource' was choosen among the available options. The parameters were filled accordingly, resource explorer would be quite helpful in getting the short resource id. Location and properties were selected among the advanced parameters and equally specified as well. The values in the properties field will now be used to create a NSG security rule by updating the Sales-VM-nsg which will block inbound connections to the Sales-VM. Blocking the inbound traffic will prevent the attacker from reconnecting.
 
-Note: For the Playbook to complete this action the managed identity of the playbook needs to be assigned a network contributor role at the NSG of the virtual machine (Sales-VM-nsg) to enforce the principle of least privilege.
+Note: For the Playbook to complete this action the managed identity of the playbook needs to be assigned a network contributor role at the NSG of the virtual machine (Sales-VM-nsg) enforcing the principle of least privilege.
 
 ![image](Images/Blk.NSG.png)
 
-The next action in the workflow is the closing of remote session on the virtual machine when a user connects to the VM with an untrusted IP. This action also ensures that only the malicious session is killed while other sessions are skipped preventing the disruption of production operation. The action is implemented with the HTTP connector, which sends a web request to the API of Azure Resource Manager (ARM), the ARM validates the request and allows the runCommand service to utilize the Azure VM agent to exexute the powershell script specified in the body of the HTTP request, basically to kill open malicious remote session.
+The next action in the workflow is the closing of the attacker's remote. This action also ensured that only the malicious session was closed while other sessions were skipped preventing the disruption of production operation. This action was implemented with the HTTP connector, which sent a web request to the API of Azure Resource Manager (ARM), the ARM validated the request and allowed the runCommand service to utilize the Azure VM agent to exexute the powershell script specified in the body of the HTTP request, basically to close the attacker's remote session.
 
-Note: For the Playbook to complete this action the managed identity of the playbook needs to be assigned a Virtual Machine contributor role at the scope of the resource, Sales-VM, enabling least privilege principle.
+Note: For the Playbook to complete this action the managed identity of the playbook needs to be assigned a Virtual Machine contributor role at the scope of the resource, Sales-VM.
 
 ![image](Images/Close.MRDP.png)
 
-The last of the actions on the workflow is to send an email notification to relevant members of the security operations team for incident review and other neccessary actions. Aside alerting the team, the email also provide a summary of the attack at a glance with details that includes the entities extracted from the incident details.
+The last of the actions on the workflow was to send an email notification to relevant members of the security operations team for incident review and other neccessary actions. Aside alerting the team, the email also provide a summary of the attack at a glance with details that includes the entities extracted from the security incident.
 
 ![image](Images/Send.Email.png)
 
 ### Integration of the playbook with Microsoft Sentinel
-To integrate the newly created playbook with Microsoft Sentinel, an automation rule in created. There are two actions in the automation rule, the first one is to assign the incident to a member of the SecOps team while the other action is run the playbook.
+To integrate the newly created playbook with Microsoft Sentinel, an automation rule was created. There were two actions in the automation rule, the first one was to assign the incident to a member of the SecOps team while the other action was to run the playbook.
 
 ![image](Images/Aut.Rule1.png)
 ![image](Images/Aut.Rule2.png)
 
-A major prequisite that was completed for seamless interaction between Microsoft Sentinel and the playbook was to configure the playbook permission Microsoft Sentinel at resource group level. This configuration automatically assigns Azure Security Insights a Microsoft Sentinel Automation Contributor role which gives Microsoft Sentinel the permission to trigger any playbook in that resource group.
+A major prequisite that was implemented for seamless interaction between Microsoft Sentinel and the playbook was to configure the playbook permission of Microsoft Sentinel at resource group level. This configuration automatically assigns the Microsoft Sentinel Automation Contributor role to Azure Security Insights (service principal) which gives Microsoft Sentinel the permission to trigger any playbook in that resource group.
 
 ![image](Images/Playbk.perm.png)
 
@@ -97,7 +97,7 @@ The Sales-user account was used to logon to the sales-VM via Azure Bastion with 
 
 ![image](Images/CR.User.png)
 
-Note: A new user was only created to demonstrate the testing of the playbook.
+Note: The new user (Random-user) was only created to effectively demonstrate the testing of the playbook.
 
 ![image](Images/Random_user.png)
 

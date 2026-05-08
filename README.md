@@ -22,10 +22,10 @@ Microsoft Sentinel, Microsoft Defender Portal, Azure Logic Apps
 ## Background Information
 This project marks the continuation of my project on managing security operation with tools from the Microsoft security stack. Prior to the commencement of this project, the following resources and services (Azure Bastion, Project-BST; Virtual Machine , Sales-VM; Virtual Network, Project-vnet; Subnet, Sales-vnet & AzureBastionSubnet; Microsoft Sentinel integrated-Log Analytics Workspace, Project-workspace; all in the same resource group, Project-RG) have already been deployed and will be used during the testing phase of this project. Additionally, the diagnostic settings of Azure Bastion (Project-BST) has also already been enabled and its events logs are being sent to the Microsoft Sentinel integrated-Log Analytics Workspace (Project-workspace) for analysis.
 
-To put this project into context, the sales team of a company has a virtual machine (Sales-VM) which host critical applications and data, and would want to enhance its security by preventing unauthorised access. The team has approved Azure Bastion and one particular IP address for remote connection to the VM. The team wants every other IPs to be deemed untrusted and such connections should be blocked. Hence, the security solution for the sales team is the core of this project. 
+To put this project into context, the sales team of a company has a virtual machine (Sales-VM) which host critical applications and data, and would want to enhance its security. The team has approved Azure Bastion and one particular IP address for remote connection to the VM. The team wants every other IPs to be deemed untrusted and such connections should be blocked. Hence, the security solution for the sales team is the core of this project. 
 
-Initially, each of the IPs that are used for the remote connection could be monitored from the logs collected from Project-BST which are stored in MicrosoftAzureBastionAuditLogs table in the Project-workspace.
-Afterwards, an analytics rule will be created to detect untrusted IPs, and the automation rule attached to the analytics rule will be utilized to trigger the playbook. The main actions of the playbook is to block the inbound RDP port of the VM once the attack is detected. However, the blocked RDP port will only prevent future remote connection to the VM whilethe attacker still remains connected. The next action is the identification of the malicious remote connections among all open RDP session and shutting it off. The last action of the playbook is the sending of an email notification about the result of the playbook to relevant members of the security operations team, while the other actions of the automation role is to assign the incident to a member of the security operations team for necessary actions.
+Initially, each of the IPs that are used for the remote connection could be monitored from the event logs stored in MicrosoftAzureBastionAuditLogs table in the Project-workspace.
+To provide a solution to the sales team security challenge, an analytics rule will be created to detect untrusted IPs, the playbook workflow will be designed, and the automation rule attached to the analytics rule will be utilized to trigger the playbook. The main actions of the playbook is to block the inbound connection to the VM, particularly RDP traffic, once the attack is detected. However, the blocked RDP port will only prevent future remote connection to the VM while the attacker's remote session is still active. The next action is to identify the malicious remote session among all active remote session and shut it off. The last action of the playbook is to send an email notification about the result of the playbook to relevant members of the security operations team.
 
 The creation of the analytics rule and the design of the workflow in the playbook will be discussed in the next section, while the testing of the playbook and conclusion follows respectively.
 
@@ -41,13 +41,13 @@ The project commenced with the creation of an analytics rule (scheduled) to dete
 
 ### Creation of the Azure Logic App playbook
 
-The playbook is created with a Microsoft Sentinel incident as the trigger. While creating the playbook the subscription and resource group is specified and consumption is specified as the tier.
+The playbook is created with Microsoft Sentinel incident as the trigger. While creating the playbook the subscription and resource group is specified alongside the tier of the Azure Logic App.
 
 ![image](Images/CR.Playbook.png)
 
 ### Designing the workflow of the playbook
 
-Following the creation of the playbook, the next step is the designing of the workflow of the playbook from trigger to the last action at the logic app designer blade.
+Following the creation of the playbook, the next step was the designing of the workflow of the playbook from trigger to the last action using the logic app designer blade.
 
 ![image](Images/Workflow.png)
 
